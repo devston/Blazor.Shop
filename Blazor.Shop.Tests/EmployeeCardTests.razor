@@ -1,0 +1,46 @@
+﻿@using Blazor.Shop.Shared.Domain
+@using Blazor.Shop.Client.Components
+
+@inherits TestContext
+
+@code {
+
+    private Employee _employee;
+
+    public EmployeeCardTests()
+    {
+        var jobCategory = new JobCategory { JobCategoryId = 3, JobCategoryName = "Management" };
+        var country = new Country { CountryId = 1, Name = "UK" };
+
+        _employee = new Employee
+        {
+            MaritalStatus = MaritalStatus.Single,
+            BirthDate = new DateTime(1989, 3, 11),
+            City = "London",
+            Email = "beth@blazorshop.com",
+            EmployeeId = 1,
+            FirstName = "Beth",
+            LastName = "Jones",
+            Gender = Gender.Female,
+            PhoneNumber = "324777888978978",
+            Smoker = false,
+            Street = "123 Test",
+            Zip = "1000",
+            JobCategory = jobCategory,
+            JobCategoryId = jobCategory.JobCategoryId,
+            Comment = "Lorem Ipsum",
+            ExitDate = null,
+            JoinedDate = new DateTime(2015, 3, 1),
+            Country = country,
+            CountryId = country.CountryId
+        };
+    }
+
+    [Fact]
+    public void RenderEmployeeCardDetailNavLink()
+    {
+        var cut = Render(@<EmployeeCard Employee="_employee" />);
+
+        cut.Find("#detailnavlink").MarkupMatches(@"<a href=""employeeedit/1"" id=""detailnavlink"" class=""btn btn-outline-primary btn-sm mb-1"">Edit employee</a>");
+    }
+}
